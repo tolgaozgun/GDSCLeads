@@ -1,5 +1,5 @@
 from django.db import models
-from GDSCLeads.managers import DiscordUserManager
+from leads.managers import DiscordUserManager
 
 
 class DiscordUser(models.Model):
