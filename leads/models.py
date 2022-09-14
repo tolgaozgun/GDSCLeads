@@ -1,8 +1,9 @@
 from django.db import models
+from GDSCLeads.managers import DiscordUserManager
 
 
 class DiscordUser(models.Model):
-    objects = DiscordUserOAuth2Manager()
+    objects = DiscordUserManager()
 
     id = models.BigIntegerField(primary_key=True)
     discord_tag = models.CharField(max_length=100)
