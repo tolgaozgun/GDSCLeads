@@ -21,15 +21,9 @@ class Lead(models.Model):
     date_added = models.DateTimeField(auto_now_add=True)
     date_updated = models.DateTimeField(auto_now=True)
 
-
-
-
-    REQUIRED_FIELDS = ['name']
-    USERNAME_FIELD = 'name'
-    EMAIL_FIELD = 'name'
-
     def __str__(self):
         if self is None:
             return "None"
         else:
             return self.first_name + " " + self.last_name
+
