@@ -1,0 +1,23 @@
+.profile-img {
+  background-size: cover;
+  border-radius: 50%;
+  display: block;
+  height: 100px;
+  margin: 30px auto 10px;
+  overflow: hidden;
+  position: relative;
+  width: 100px;
+}
+
+.socials {
+  margin: 20px auto 10px;
+  width: 200px;
+}
+
+.socials a {
+  margin-right: 5px;
+}
+
+#map{
+  height: 576px;
+}

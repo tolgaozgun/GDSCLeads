@@ -1,10 +1,57 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <title>Title</title>
-</head>
-<body>
+{% extends 'main/base_index.html' %}
 
-</body>
-</html>
+{% block extracss %}
+    {% load static %}
+    <link rel="stylesheet" href="{% static 'css/profiles/profiles.css' %}">
+{% endblock %}
+
+{% block content %}
+<div class="container mt-5">
+    <div class="row d-flex justify-content-center">
+        <div class="col-md-7">
+            <div class="card p-3 py-4">
+                <div class="text-center">
+                    <img src="{{ lead.photo.src }}" width="100" class="rounded-circle">
+                </div>
+                <div class="text-center mt-3">
+                    <h5 class="mb-0">{{ lead.name }}</h5>
+                    <a href="{% url 'view_community' lead.community.id %}">{{ lead.community.name }}</a>
+                    <div class="px-4 mt-1">
+                        <p class="fonts">{{ lead.biography }}</p>
+                    </div>
+                    <span class="bg-secondary p-1 px-4 rounded text-white">Social Medias</span>
+                     <div class="social-list" style="margin: 20px auto 0">
+                        {% if lead.social_instagram != None %}
+                        <a href="https://instagram.com/{{ lead.social_instagram }}"><i class="fa-brands fa-instagram fa-2x"></i></a>
+                        {% endif %}
+
+                        {% if lead.social_facebook != None %}
+                        <a href="https://facebook.com/{{ lead.social_facebook }}"><i class="fa-brands fa-facebook fa-2x"></i></a>
+                        {% endif %}
+
+                        {% if lead.social_twitter != None %}
+                        <a href="https://twitter.com/{{ lead.social_twitter }}"><i class="fa-brands fa-twitter fa-2x"></i></a>
+                        {% endif %}
+
+                        {% if lead.social_linkedin != None %}
+                        <a href="https://linkedin.com/in/{{ lead.social_linkedin }}"><i class="fa-brands fa-linkedin fa-2x"></i></a>
+                        {% endif %}
+
+                        {% if lead.social_youtube != None %}
+                        <a href="https://youtube.com/{{ lead.social_youtube }}"><i class="fa-brands fa-youtube fa-2x"></i></a>
+                        {% endif %}
+
+                        {% if lead.social_website != None %}
+                        <a href="{{ lead.social_website }}"><i class="fa-solid fa-link fa-2x"></i></a>
+                        {% endif %}
+
+                        {% if lead.social_email != None %}
+                        <a href="mailto:{{ lead.social_email }}"><i class="fa-solid fa-envelope fa-2x"></i></a>
+                        {% endif %}
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}

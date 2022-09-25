@@ -1,0 +1,145 @@
+{% extends 'main/base_index.html' %}
+
+{% block title %}
+    <title>GDSC Events Map</title>
+{% endblock %}
+
+{% block extracss %}
+    {% load static %}
+    <link rel="stylesheet" href="{% static 'css/map/map.css' %}"/>
+{% endblock %}
+
+{% block content %}
+<div class="container mt-5">
+    <h2>GDSC Events Map</h2>
+    <div id="map"></div>
+
+    <!-- Grid was inspired from StartBootstrap examples -->
+    <!-- Header -->
+    <header class="bg-primary text-center py-5 mb-4">
+        <div class="container">
+            <h1 class="fw-light text-white">Upcoming Events</h1>
+        </div>
+    </header>
+
+    <!-- Page Content -->
+    <div class="container">
+        <div class="row">
+            {% for lead in leads %}
+            <!-- Team Member -->
+            <div class="col-xl-3 col-md-6 mb-4">
+                <div class="card border shadow">
+                    <img src="https://source.unsplash.com/TMgQMXoglsM/500x350" class="card-img-top profile-img"
+                         alt="lead profile image">
+                    <div class="card-body text-center">
+                        <h5 class="card-title mb-0"><a href="{% url 'view_lead' lead.id %}">{{ lead.name }}</a></h5>
+                        <div class="card-text text-black-50"><a href="{% url 'view_community' lead.community.id %}">{{ lead.community.name }}</a></div>
+                        <div class="socials">
+
+                        {% if lead.social_instagram != None %}
+                        <a href="https://instagram.com/{{ lead.social_instagram }}"><i class="fa-brands fa-instagram fa-2x"></i></a>
+                        {% endif %}
+
+                        {% if lead.social_facebook != None %}
+                        <a href="https://facebook.com/{{ lead.social_facebook }}"><i class="fa-brands fa-facebook fa-2x"></i></a>
+                        {% endif %}
+
+                        {% if lead.social_twitter != None %}
+                        <a href="https://twitter.com/{{ lead.social_twitter }}"><i class="fa-brands fa-twitter fa-2x"></i></a>
+                        {% endif %}
+
+                        {% if lead.social_linkedin != None %}
+                        <a href="https://linkedin.com/in/{{ lead.social_linkedin }}"><i class="fa-brands fa-linkedin fa-2x"></i></a>
+                        {% endif %}
+
+                        {% if lead.social_youtube != None %}
+                        <a href="https://youtube.com/{{ lead.social_youtube }}"><i class="fa-brands fa-youtube fa-2x"></i></a>
+                        {% endif %}
+
+                        {% if lead.social_website != None %}
+                        <a href="{{ lead.social_website }}"><i class="fa-solid fa-link fa-2x"></i></a>
+                        {% endif %}
+
+                        {% if lead.social_email != None %}
+                        <a href="mailto:{{ lead.social_email }}"><i class="fa-solid fa-envelope fa-2x"></i></a>
+                        {% endif %}
+
+                        </div>
+                    </div>
+                </div>
+            </div>
+            {% endfor %}
+        <!-- /.row -->
+        </div>
+    </div>
+    <!-- /.container -->
+
+</div>
+
+<script type="text/javascript">
+    // This javascript snippet was inspired from tuts-station.com
+
+    const communities = {{ json_communities|safe }};
+    const leads = {{ json_leads|safe }};
+
+    let loadedLead;
+
+    function loadLead(map, marker) {
+        if (loadedLead != null) {
+            loadedLead.close()
+        }
+        $.ajax({
+            url: "api/lead/" + marker.id,
+            type: "GET",
+            dataType: "html",
+            success: function (data) {
+                let infoWindow = new google.maps.InfoWindow({
+                    content: data.toString()
+                })
+                infoWindow.open(map, marker)
+                loadedLead = infoWindow
+            },
+            error: function (xhr, status) {
+                let infoWindow = new google.maps.InfoWindow({
+                    content: "Error in connection"
+                })
+                infoWindow.open(map, marker)
+                loadedLead = infoWindow
+            },
+            complete: function (xhr, status) {
+                //$('#showresults').slideDown('slow')
+            }
+        });
+    }
+
+    function initMap() {
+        const map = new google.maps.Map(document.getElementById("map"), {
+            zoom: 6,
+            center: {lat: 39.5147018, lng: 35.1769132},
+            mapTypeId: google.maps.MapTypeId.ROADMAP
+        });
+
+
+        let marker, i;
+
+        for (i = 0; i < communities.length; i++) {
+            marker = new google.maps.Marker({
+                position: new google.maps.LatLng(communities[i]['fields']['latitude'], communities[i]['fields']['longitude']),
+                map,
+                id: communities[i]['pk']
+            });
+
+            google.maps.event.addListener(marker, 'click', (function (marker, i) {
+                return function () {
+                    loadLead(map, marker)
+                }
+            })(marker, i));
+        }
+    }
+
+    window.initMap = initMap;
+</script>
+
+<script type="text/javascript"
+        src="https://maps.google.com/maps/api/js?key={{ google_maps_api_key }}&callback=initMap"></script>
+{% endblock %}
