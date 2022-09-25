@@ -1,0 +1,32 @@
+{% extends 'main/base_index.html' %}
+
+{% block extracss %}
+    {% load static %}
+    <link rel="stylesheet" href="{% static 'css/profiles/profiles.css' %}">
+{% endblock %}
+
+{% block content %}
+<div class="container mt-5">
+    <div class="row d-flex justify-content-center">
+        <div class="col-md-7">
+            <div class="card p-3 py-4">
+                <div class="text-center">
+                    <img src="{{ event.photo.url }}" width="100" class="rounded-circle">
+                </div>
+                <div class="text-center mt-3">
+                    <h5 class="mb-0">{{ event.name }}</h5>
+                    <a href="{% url 'view_community' event.community.id %}">{{ event.community.name }}</a>
+                    <div class="px-4 mt-1">
+                        <p class="fonts">{{ event.description }}</p>
+                    </div>
+
+                    <span class="bg-secondary p-1 px-4 rounded text-white">City</span>
+                     <div class="social-list" style="margin: 20px auto 0">
+                         <p>{{ event.city.name }}</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}

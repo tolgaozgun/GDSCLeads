@@ -37,10 +37,10 @@ class Community(models.Model):
             return self.name
 
 
-
 class Lead(models.Model):
     name = models.CharField(max_length=300)
-    community = models.ForeignKey(Community, related_name="community", on_delete=models.CASCADE, null=False, blank=False)
+    community = models.ForeignKey(Community, related_name="lead", on_delete=models.CASCADE,
+                                  null=False, blank=False)
     photo = models.ImageField(upload_to="lead", null=True, default="lead/avatar.png")
     biography = models.TextField()
     social_instagram = models.CharField(max_length=300, null=True, blank=True)
@@ -50,6 +50,22 @@ class Lead(models.Model):
     social_linkedin = models.CharField(max_length=300, null=True, blank=True)
     social_email = models.CharField(max_length=300, null=True, blank=True)
     social_youtube = models.CharField(max_length=300, null=True, blank=True)
+    date_added = models.DateTimeField(auto_now_add=True)
+    date_updated = models.DateTimeField(auto_now=True)
+
+    def __str__(self):
+        if self is None:
+            return "None"
+        else:
+            return self.name
+
+
+class Event(models.Model):
+    name = models.CharField(max_length=400)
+    photo = models.ImageField(upload_to="event", null=True, default="event/avatar.png")
+    city = models.ForeignKey(City, related_name="events", on_delete=models.CASCADE, null=False, blank=False)
+    community = models.ForeignKey(Community, related_name="events", on_delete=models.CASCADE, null=False, blank=False)
+    description = models.TextField()
     date_added = models.DateTimeField(auto_now_add=True)
     date_updated = models.DateTimeField(auto_now=True)
 

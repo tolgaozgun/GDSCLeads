@@ -1,16 +1,11 @@
-<!DOCTYPE html>
-<html lang="en">
-    <head>
-        <meta charset="utf-8" />
-        <meta http-equiv="X-UA-Compatible" content="IE=edge" />
-        <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no" />
-        <meta name="description" content="" />
-        <meta name="author" content="" />
-        <title>404 Error - SB Admin</title>
-        <link href="css/styles.css" rel="stylesheet" />
-        <script src="https://use.fontawesome.com/releases/v6.1.0/js/all.js" crossorigin="anonymous"></script>
-    </head>
-    <body>
+{% extends 'panel/base/base_index.html' %}
+{% block content %}
+
+<div id="layoutSidenav">
+{% block sidenav %}
+    {% include 'panel/base/base_sidenav.html' %}
+{% endblock %}
+    <div id="layoutSidenav_content">
         <div id="layoutError">
             <div id="layoutError_content">
                 <main>
@@ -18,9 +13,8 @@
                         <div class="row justify-content-center">
                             <div class="col-lg-6">
                                 <div class="text-center mt-4">
-                                    <img class="mb-4 img-error" src="assets/img/error-404-monochrome.svg" />
                                     <p class="lead">This requested URL was not found on this server.</p>
-                                    <a href="index.html">
+                                    <a href="{% url 'panel_index' %}">
                                         <i class="fas fa-arrow-left me-1"></i>
                                         Return to Dashboard
                                     </a>
@@ -45,7 +39,6 @@
                 </footer>
             </div>
         </div>
-        <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.bundle.min.js" crossorigin="anonymous"></script>
-        <script src="js/scripts.js"></script>
-    </body>
-</html>
+    </div>
+</div>
+{% endblock %}

@@ -1,0 +1,23 @@
+{% extends 'main/base_index.html' %}
+
+{% block extracss %}
+    {% load static %}
+    <link rel="stylesheet" href="{% static 'css/profiles/profiles.css' %}">
+{% endblock %}
+
+{% block content %}
+<div class="container mt-5">
+    <div class="row d-flex justify-content-center">
+        <div class="col-md-7">
+            <div class="card p-3 py-4">
+                <div class="text-center">
+{#                    <img src="{{ city.photo.url }}" width="100" class="rounded-circle">#}
+                </div>
+                <div class="text-center mt-3">
+                    <h5 class="mb-0">{{ city.name }}</h5>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}

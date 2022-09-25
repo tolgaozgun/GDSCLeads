@@ -1,0 +1,76 @@
+{% extends 'panel/base/base_index.html'%}
+
+{% block title %}
+    <title>GDSC Panel - Communities</title>
+{% endblock %}
+
+{% block content %}
+
+<div id="layoutSidenav">
+{% block sidenav %}
+    {% include 'panel/base/base_sidenav.html' %}
+{% endblock %}
+    <div id="layoutSidenav_content">
+        <main>
+            <div class="container-fluid px-4">
+                <div class="card-header">
+                    <i class="fas fa-table me-1"></i>
+                    Communities
+                </div>
+                <div class="card-body">
+                    <table id="datatablesSimple">
+                        <thead>
+                            <tr>
+                                <th>ID</th>
+                                <th>Photo</th>
+                                <th>Name</th>
+                                <th>Lead</th>
+                                <th>Bio</th>
+                                <th>Instagram</th>
+                                <th>Website</th>
+                                <th>Twitter</th>
+                                <th>Linkedin</th>
+                                <th>Email</th>
+                                <th>Youtube</th>
+                            </tr>
+                        </thead>
+                        <tfoot>
+                            <tr>
+                                <th>ID</th>
+                                <th>Photo</th>
+                                <th>Name</th>
+                                <th>Lead</th>
+                                <th>Bio</th>
+                                <th>Instagram</th>
+                                <th>Website</th>
+                                <th>Twitter</th>
+                                <th>Linkedin</th>
+                                <th>Email</th>
+                                <th>Youtube</th>
+                            </tr>
+                        </tfoot>
+                        <tbody>
+                        {% for community in communities %}
+                            <tr>
+                                <td>{{ community.id }}</td>
+                                <td><img src="{{ community.photo.url }}" style="max-width: 100px; max-height: 100px"></td>
+                                <td><a href="{% url 'view_community' community.id %}">{{ community.name }}</a></td>
+{# TODO: Fix community lead here                                #}
+                                <td><a href="">{{ community.lead.name}}</a></td>
+                                <td>{{ community.biography }}</td>
+                                <td><a href="https://instagram.com/{{ community.social_instagram }}">{{ community.social_instagram }}</a></td>
+                                <td><a href="{{ community.social_website }}">{{ community.social_website }}</a></td>
+                                <td><a href="https://twitter.com/{{ community.social_twitter }}">{{ community.social_twitter }}</a></td>
+                                <td><a href="https://linkedin.com/{{ community.social_linkedin }}">{{ community.social_linkedin }}</a></td>
+                                <td><a href="mailto:{{ community.social_email }}">{{ community.social_email }}</a></td>
+                                <td><a href="https://youtube.com/{{ community.social_youtube }}">{{ community.social_youtube }}</a></td>
+                            </tr>
+                        {% endfor %}
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </main>
+    </div>
+</div>
+{% endblock %}
