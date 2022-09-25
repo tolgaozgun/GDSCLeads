@@ -41,6 +41,17 @@
                         <a class="nav-link" href="{% url 'panel_events' %}">Browse Events</a>
                     </nav>
                 </div>
+                <a class="nav-link collapsed" href="#" data-bs-toggle="collapse" data-bs-target="#collapseCities" aria-expanded="false" aria-controls="collapseCities">
+                    <div class="sb-nav-link-icon"><i class="fas fa-book-open"></i></div>
+                    Cities
+                    <div class="sb-sidenav-collapse-arrow"><i class="fas fa-angle-down"></i></div>
+                </a>
+                <div class="collapse" id="collapseCities" aria-labelledby="headingTwo" data-bs-parent="#sidenavAccordion">
+                    <nav class="sb-sidenav-menu-nested nav">
+                        <a class="nav-link" href="{% url 'panel_city_add' %}">Add a New City</a>
+                        <a class="nav-link" href="{% url 'panel_cities' %}">Browse Cities</a>
+                    </nav>
+                </div>
                 <div class="sb-sidenav-menu-heading">Settings</div>
                 <a class="nav-link" href="{% url 'panel_index' %}">
                     <div class="sb-nav-link-icon"><i class="fas fa-tachometer-alt"></i></div>
@@ -49,6 +60,10 @@
                 <a class="nav-link" href="{% url 'panel_index' %}">
                     <div class="sb-nav-link-icon"><i class="fas fa-tachometer-alt"></i></div>
                     Activity Log
+                </a>
+                <a class="nav-link" href="{% url 'index' %}">
+                    <div class="sb-nav-link-icon"><i class="fas fa-tachometer-alt"></i></div>
+                    Back to Website
                 </a>
             </div>
         </div>

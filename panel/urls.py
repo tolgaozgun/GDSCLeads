@@ -26,5 +26,10 @@ urlpatterns = [
     path('events/<int:pk>/edit', EditEventView.as_view(), name="panel_event_edit"),
     path('events/<int:pk>/delete', DeleteEventView.as_view(), name="panel_event_delete"),
 
+    path('cities', BrowseCitiesView.as_view(), name="panel_cities"),
+    path('cities/add', AddCityView.as_view(), name="panel_city_add"),
+    path('cities/<int:pk>/edit', EditCityView.as_view(), name="panel_city_edit"),
+    path('cities/<int:pk>/delete', DeleteCityView.as_view(), name="panel_city_delete"),
+
 
 ]

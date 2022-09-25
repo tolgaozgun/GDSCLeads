@@ -4,10 +4,10 @@ from django.shortcuts import render
 # Create your views here.
 from django.views import View
 
-from map.models import Lead, Community, Event
+from map.models import Lead, Community, Event, City
 
 
-class LoggedInView(View, LoginRequiredMixin):
+class LoggedInView(LoginRequiredMixin, View):
     login_url = '/login/'
     redirect_field_name = 'redirect'
 
@@ -113,5 +113,30 @@ class EditEventView(LoggedInView):
 
 
 class DeleteEventView(LoggedInView):
+    def get(self, request):
+        pass
+
+
+class AddCityView(LoggedInView):
+    def get(self, request):
+        pass
+
+
+class BrowseCitiesView(LoggedInView):
+    def get(self, request):
+        try:
+            cities = City.objects.all()
+        except City.DoesNotExist:
+            cities = None
+        context = {"cities": cities}
+        return render(request, "panel/cities/cities.html", context)
+
+
+class EditCityView(LoggedInView):
+    def get(self, request):
+        pass
+
+
+class DeleteCityView(LoggedInView):
     def get(self, request):
         pass
