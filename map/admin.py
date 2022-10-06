@@ -1,9 +1,8 @@
 from django.contrib import admin
-
-# Register your models here.
-from map.models import Lead, City, Community, Event
+from map.models import *
 
 admin.site.register(Community)
 admin.site.register(City)
-admin.site.register(Lead)
+admin.site.register(User)
 admin.site.register(Event)
+admin.site.register(Venue)

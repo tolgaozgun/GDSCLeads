@@ -1,0 +1,126 @@
+{% extends 'panel/base/base_index.html'%}
+
+{% block title %}
+    <title>GDSC Panel - Members</title>
+{% endblock %}
+
+{% block content %}
+
+<div id="layoutSidenav">
+{% block sidenav %}
+    {% include 'panel/base/base_sidenav.html' %}
+{% endblock %}
+    <div id="layoutSidenav_content">
+        <main>
+            <div class="container-fluid px-4">
+                <div class="card-header">
+                    <i class="fas fa-table me-1"></i>
+                    Leads
+                </div>
+                <div class="card-body">
+                    <table id="datatablesSimple">
+                        <thead>
+                            <tr>
+                                <th>ID</th>
+                                <th>Photo</th>
+                                <th>Name</th>
+                                <th>Community</th>
+                                <th>Email</th>
+                                <th>Bio</th>
+                                <th>Instagram</th>
+                                <th>Website</th>
+                                <th>Twitter</th>
+                                <th>Linkedin</th>
+                                <th>Contact Email</th>
+                                <th>Youtube</th>
+                                <th>Lead?</th>
+                                <th>Actions</th>
+                            </tr>
+                        </thead>
+                        <tfoot>
+                            <tr>
+                                <th>ID</th>
+                                <th>Photo</th>
+                                <th>Name</th>
+                                <th>Community</th>
+                                <th>Email</th>
+                                <th>Bio</th>
+                                <th>Instagram</th>
+                                <th>Website</th>
+                                <th>Twitter</th>
+                                <th>Linkedin</th>
+                                <th>Contact Email</th>
+                                <th>Youtube</th>
+                                <th>Lead?</th>
+                                <th>Actions</th>
+                            </tr>
+                        </tfoot>
+                        <tbody>
+                        {% for member in members %}
+                            <tr>
+                                <td>{{ member.id }}</td>
+                                <td><a href="{{ member.photo.url }}"><img src="{{ member.photo.url }}" style="max-width: 100px; max-height: 100px"></a></td>
+                                <td><a href="{% url 'view_member' member.id %}">{{ member.name }}</a></td>
+                                {% if member.community is not None %}
+                                <td><a href="{% url 'view_community' member.community.id %}">{{member.community.name}}</a></td>
+                                {% else %}
+                                <td>Not in a Community</td>
+                                {% endif %}
+                                <td>{{ member.email }}</td>
+                                <td>{{ member.biography }}</td>
+                                {% if member.social_instagram is not None %}
+                                <td><a href="https://instagram.com/{{ member.social_instagram }}">{{ member.social_instagram }}</a></td>
+                                {% else %}
+                                <td>Not Given</td>
+                                {% endif %}
+                                {% if member.social_website is not None %}
+                                <td><a href="{{ member.social_website }}">{{ member.social_website }}</a></td>
+                                {% else %}
+                                <td>Not Given</td>
+                                {% endif %}
+                                {% if member.social_twitter is not None %}
+                                <td><a href="https://twitter.com/{{ member.social_twitter }}">{{ member.social_twitter }}</a></td>
+                                {% else %}
+                                <td>Not Given</td>
+                                {% endif %}
+                                {% if member.social_linkedin is not None %}
+                                <td><a href="https://linkedin.com/{{ member.social_linkedin }}">{{ member.social_linkedin }}</a></td>
+                                {% else %}
+                                <td>Not Given</td>
+                                {% endif %}
+                                {% if member.social_email is not None %}
+                                <td><a href="mailto:{{ member.social_email }}">{{ member.social_email }}</a></td>
+                                {% else %}
+                                <td>Not Given</td>
+                                {% endif %}
+                                {% if member.social_youtube is not None %}
+                                <td><a href="https://youtube.com/{{ member.social_youtube }}">{{ member.social_youtube }}</a></td>
+                                {% else %}
+                                <td>Not Given</td>
+                                {% endif %}
+                                <td>{{ member.is_lead }}</td>
+                                <td>
+                                    <div class="container-fluid">
+                                        <div class="row">
+                                            <a href="{% url 'view_member' member.id %}" class="btn btn-sm" data-toggle="tooltip" title="View">
+                                                <i class="fa fa-eye ambitious-padding-btn"></i>
+                                            </a>
+                                            <a href="{% url 'panel_member_edit' member.id %}" class="btn btn-sm" data-toggle="tooltip" title="Edit">
+                                                <i class="fa fa-pencil ambitious-padding-btn"></i>
+                                            </a>
+                                            <a class="btn btn-sm" data-toggle="tooltip" title="Delete">
+                                                <i class="fa fa-trash ambitious-padding-btn"></i>
+                                            </a>
+                                        </div>
+                                    </div>
+                                </td>
+                            </tr>
+                        {% endfor %}
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </main>
+    </div>
+</div>
+{% endblock %}

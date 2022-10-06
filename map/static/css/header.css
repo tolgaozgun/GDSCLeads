@@ -46,9 +46,11 @@ a {
 
 .top-bar {
   padding: .5rem 0;
-  background: #eee; }
+  background: #7a7a7a; }
   .top-bar a {
-    color: #666666; }
+    color: #ffffff; }
+  .top-bar span {
+    color: #ffffff; }
 
 .site-navbar {
   margin-bottom: 0px;

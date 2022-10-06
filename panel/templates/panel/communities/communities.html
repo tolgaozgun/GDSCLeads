@@ -24,6 +24,7 @@
                                 <th>ID</th>
                                 <th>Photo</th>
                                 <th>Name</th>
+                                <th>City</th>
                                 <th>Lead</th>
                                 <th>Bio</th>
                                 <th>Instagram</th>
@@ -32,6 +33,7 @@
                                 <th>Linkedin</th>
                                 <th>Email</th>
                                 <th>Youtube</th>
+                                <th>Actions</th>
                             </tr>
                         </thead>
                         <tfoot>
@@ -39,6 +41,7 @@
                                 <th>ID</th>
                                 <th>Photo</th>
                                 <th>Name</th>
+                                <th>City</th>
                                 <th>Lead</th>
                                 <th>Bio</th>
                                 <th>Instagram</th>
@@ -47,6 +50,7 @@
                                 <th>Linkedin</th>
                                 <th>Email</th>
                                 <th>Youtube</th>
+                                <th>Actions</th>
                             </tr>
                         </tfoot>
                         <tbody>
@@ -55,6 +59,7 @@
                                 <td>{{ community.id }}</td>
                                 <td><img src="{{ community.photo.url }}" style="max-width: 100px; max-height: 100px"></td>
                                 <td><a href="{% url 'view_community' community.id %}">{{ community.name }}</a></td>
+                                <td><a href="{% url 'view_city' community.city.id %}">{{ community.city }}</a></td>
 {# TODO: Fix community lead here                                #}
                                 <td><a href="">{{ community.lead.name}}</a></td>
                                 <td>{{ community.biography }}</td>
@@ -64,6 +69,21 @@
                                 <td><a href="https://linkedin.com/{{ community.social_linkedin }}">{{ community.social_linkedin }}</a></td>
                                 <td><a href="mailto:{{ community.social_email }}">{{ community.social_email }}</a></td>
                                 <td><a href="https://youtube.com/{{ community.social_youtube }}">{{ community.social_youtube }}</a></td>
+                                <td>
+                                    <div class="container-fluid">
+                                        <div class="row">
+                                            <a href="{% url 'view_community' community.id %}" class="btn btn-sm" data-toggle="tooltip" title="View">
+                                                <i class="fa fa-eye ambitious-padding-btn"></i>
+                                            </a>
+                                            <a href="{% url 'panel_community_edit' community.id %}" class="btn btn-sm" data-toggle="tooltip" title="Edit">
+                                                <i class="fa fa-pencil ambitious-padding-btn"></i>
+                                            </a>
+                                            <a class="btn btn-sm" data-toggle="tooltip" title="Delete">
+                                                <i class="fa fa-trash ambitious-padding-btn"></i>
+                                            </a>
+                                        </div>
+                                    </div>
+                                </td>
                             </tr>
                         {% endfor %}
                         </tbody>

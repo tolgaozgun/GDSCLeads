@@ -35,11 +35,14 @@ DEBUG = True
 
 ALLOWED_HOSTS = []
 
+AUTH_USER_MODEL = 'map.User'
+
 
 # Application definition
 
 INSTALLED_APPS = [
     'map',
+    'leads',
     'profiles',
     'panel',
     'django.contrib.admin',

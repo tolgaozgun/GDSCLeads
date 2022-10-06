@@ -25,43 +25,47 @@
     <!-- Page Content -->
     <div class="container">
         <div class="row">
-            {% for lead in leads %}
+            {% for event in events %}
             <!-- Team Member -->
             <div class="col-xl-3 col-md-6 mb-4">
                 <div class="card border shadow">
-                    <img src="https://source.unsplash.com/TMgQMXoglsM/500x350" class="card-img-top profile-img"
-                         alt="lead profile image">
+                    <img src="{{ event.photo.url }}" class="card-img-top profile-img"
+                         alt="event_image">
                     <div class="card-body text-center">
-                        <h5 class="card-title mb-0"><a href="{% url 'view_lead' lead.id %}">{{ lead.name }}</a></h5>
-                        <div class="card-text text-black-50"><a href="{% url 'view_community' lead.community.id %}">{{ lead.community.name }}</a></div>
+                        <h5 class="card-title mb-0"><a href="{% url 'view_event' event.id %}">{{ event.name }}</a></h5>
+                        {% for community in event.communities.all %}
+                        <div class="card-text text-black-50"><a href="{% url 'view_community' community.id %}">{{ community.name }}</a></div>
+                        {% endfor %}
                         <div class="socials">
 
-                        {% if lead.social_instagram != None %}
-                        <a href="https://instagram.com/{{ lead.social_instagram }}"><i class="fa-brands fa-instagram fa-2x"></i></a>
+
+
+                        {% if event.community.social_instagram != None %}
+                        <a href="https://instagram.com/{{ event.community.social_instagram }}"><i class="fa-brands fa-instagram fa-2x"></i></a>
                         {% endif %}
 
-                        {% if lead.social_facebook != None %}
-                        <a href="https://facebook.com/{{ lead.social_facebook }}"><i class="fa-brands fa-facebook fa-2x"></i></a>
+                        {% if event.community.social_facebook != None %}
+                        <a href="https://facebook.com/{{ event.community.social_facebook }}"><i class="fa-brands fa-facebook fa-2x"></i></a>
                         {% endif %}
 
-                        {% if lead.social_twitter != None %}
-                        <a href="https://twitter.com/{{ lead.social_twitter }}"><i class="fa-brands fa-twitter fa-2x"></i></a>
+                        {% if event.community.social_twitter != None %}
+                        <a href="https://twitter.com/{{ event.community.social_twitter }}"><i class="fa-brands fa-twitter fa-2x"></i></a>
                         {% endif %}
 
-                        {% if lead.social_linkedin != None %}
-                        <a href="https://linkedin.com/in/{{ lead.social_linkedin }}"><i class="fa-brands fa-linkedin fa-2x"></i></a>
+                        {% if event.community.social_linkedin != None %}
+                        <a href="https://linkedin.com/in/{{ event.community.social_linkedin }}"><i class="fa-brands fa-linkedin fa-2x"></i></a>
                         {% endif %}
 
-                        {% if lead.social_youtube != None %}
-                        <a href="https://youtube.com/{{ lead.social_youtube }}"><i class="fa-brands fa-youtube fa-2x"></i></a>
+                        {% if event.community.social_youtube != None %}
+                        <a href="https://youtube.com/{{ event.community.social_youtube }}"><i class="fa-brands fa-youtube fa-2x"></i></a>
                         {% endif %}
 
-                        {% if lead.social_website != None %}
-                        <a href="{{ lead.social_website }}"><i class="fa-solid fa-link fa-2x"></i></a>
+                        {% if event.community.social_website != None %}
+                        <a href="{{ event.community.social_website }}"><i class="fa-solid fa-link fa-2x"></i></a>
                         {% endif %}
 
-                        {% if lead.social_email != None %}
-                        <a href="mailto:{{ lead.social_email }}"><i class="fa-solid fa-envelope fa-2x"></i></a>
+                        {% if event.community.social_email != None %}
+                        <a href="mailto:{{ event.community.social_email }}"><i class="fa-solid fa-envelope fa-2x"></i></a>
                         {% endif %}
 
                         </div>
@@ -79,17 +83,24 @@
 <script type="text/javascript">
     // This javascript snippet was inspired from tuts-station.com
 
-    const communities = {{ json_communities|safe }};
-    const leads = {{ json_leads|safe }};
+    const events = {{ json_events|safe }};
 
-    let loadedLead;
+    let loadedEvent;
+
+    function findLead(id){
+        return events.filter(
+            function (data){
+                return data.code === id
+            }
+        )
+    }
 
     function loadLead(map, marker) {
-        if (loadedLead != null) {
-            loadedLead.close()
+        if (loadedEvent != null) {
+            loadedEvent.close()
         }
         $.ajax({
-            url: "api/lead/" + marker.id,
+            url: "../api/event/" + marker.id,
             type: "GET",
             dataType: "html",
             success: function (data) {
@@ -97,14 +108,14 @@
                     content: data.toString()
                 })
                 infoWindow.open(map, marker)
-                loadedLead = infoWindow
+                loadedEvent = infoWindow
             },
             error: function (xhr, status) {
                 let infoWindow = new google.maps.InfoWindow({
                     content: "Error in connection"
                 })
                 infoWindow.open(map, marker)
-                loadedLead = infoWindow
+                loadedEvent = infoWindow
             },
             complete: function (xhr, status) {
                 //$('#showresults').slideDown('slow')
@@ -122,11 +133,11 @@
 
         let marker, i;
 
-        for (i = 0; i < communities.length; i++) {
+        for (i = 0; i < events.length; i++) {
             marker = new google.maps.Marker({
-                position: new google.maps.LatLng(communities[i]['fields']['latitude'], communities[i]['fields']['longitude']),
+                position: new google.maps.LatLng(events[i]['fields']['latitude'], events[i]['fields']['longitude']),
                 map,
-                id: communities[i]['pk']
+                id: events[i]['pk']
             });
 
             google.maps.event.addListener(marker, 'click', (function (marker, i) {

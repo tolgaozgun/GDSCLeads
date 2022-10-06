@@ -15,14 +15,16 @@
                 </div>
                 <div class="text-center mt-3">
                     <h5 class="mb-0">{{ event.name }}</h5>
-                    <a href="{% url 'view_community' event.community.id %}">{{ event.community.name }}</a>
+                    {% for community in event.communities.all %}
+                    <a href="{% url 'view_community' community.id %}">{{ community.name }}</a>
+                    {% endfor %}
                     <div class="px-4 mt-1">
                         <p class="fonts">{{ event.description }}</p>
                     </div>
 
-                    <span class="bg-secondary p-1 px-4 rounded text-white">City</span>
+                    <span class="bg-secondary p-1 px-4 rounded text-white">Venue</span>
                      <div class="social-list" style="margin: 20px auto 0">
-                         <p>{{ event.city.name }}</p>
+                         <p>{{ event.venue.name }}</p>
                     </div>
                 </div>
             </div>

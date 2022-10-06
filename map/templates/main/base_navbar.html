@@ -7,6 +7,27 @@
         <div class="site-mobile-menu-body"></div>
       </div>
 
+    {% if request.user.is_authenticated %}
+      <div class="top-bar">
+        <div class="container">
+          <div class="row">
+            <div class="col-12">
+              <span class="d-none d-md-inline-block">Hello, {{ request.user.name }}</span>
+
+
+              <div class="float-end">
+
+                <a href="{% url 'panel_index' %}" class=""><span class="d-none d-md-inline-block">Go to dashboard</span></a>
+
+              </div>
+
+            </div>
+
+          </div>
+
+        </div>
+      </div>
+    {% endif %}
 
       <header class="site-navbar js-sticky-header site-navbar-target" role="banner">
 
@@ -26,7 +47,9 @@
                   <li><a href="{% url 'map_leads' %}" class="nav-link">Lead Map</a></li>
                   <li><a href="{% url 'map_communities' %}" class="nav-link">Community Map</a></li>
                   <li><a href="{% url 'map_events' %}" class="nav-link">Events</a></li>
+                  {% if not request.user.is_authenticated %}
                   <li><a href="{% url 'login' %}" class="nav-link">Login</a></li>
+                  {% endif %}
 
 
 {#                  <li class="has-children">#}
@@ -51,7 +74,7 @@
 
             </div>
 
-            <div class="toggle-button d-inline-block d-lg-none"><a href="#" class="site-menu-toggle py-5 js-menu-toggle text-black"><span class="icon-menu h3"></span></a></div>
+            <div class="toggle-button d-inline-block d-lg-none text-end"><a href="#" class="site-menu-toggle py-5 js-menu-toggle text-black"><span class="icon-menu h3"></span></a></div>
 
           </div>
         </div>

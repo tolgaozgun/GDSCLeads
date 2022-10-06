@@ -25,43 +25,47 @@
     <!-- Page Content -->
     <div class="container">
         <div class="row">
-            {% for lead in leads %}
+            {% for community in communities %}
             <!-- Team Member -->
             <div class="col-xl-3 col-md-6 mb-4">
                 <div class="card border shadow">
-                    <img src="https://source.unsplash.com/TMgQMXoglsM/500x350" class="card-img-top profile-img"
+                    <img src="{{ community.lead.photo.url }}" class="card-img-top profile-img"
                          alt="lead profile image">
                     <div class="card-body text-center">
-                        <h5 class="card-title mb-0"><a href="{% url 'view_lead' lead.id %}">{{ lead.name }}</a></h5>
-                        <div class="card-text text-black-50"><a href="{% url 'view_community' lead.community.id %}">{{ lead.community.name }}</a></div>
+                        {% if community.lead.id is not None %}
+                        <h5 class="card-title mb-0"><a href="{% url 'view_member' community.lead.id %}">{{ community.lead.name }}</a></h5>
+                        {% else %}
+                        <h5 class="card-title mb-0">Does not have a lead</h5>
+                        {% endif %}
+                        <div class="card-text text-black-50"><a href="{% url 'view_community' community.id %}">{{ community.name }}</a></div>
                         <div class="socials">
 
-                        {% if lead.social_instagram != None %}
-                        <a href="https://instagram.com/{{ lead.social_instagram }}"><i class="fa-brands fa-instagram fa-2x"></i></a>
+                        {% if community.lead.social_instagram != None %}
+                        <a href="https://instagram.com/{{ community.lead.social_instagram }}"><i class="fa-brands fa-instagram fa-2x"></i></a>
                         {% endif %}
 
-                        {% if lead.social_facebook != None %}
-                        <a href="https://facebook.com/{{ lead.social_facebook }}"><i class="fa-brands fa-facebook fa-2x"></i></a>
+                        {% if community.lead.social_facebook != None %}
+                        <a href="https://facebook.com/{{ community.lead.social_facebook }}"><i class="fa-brands fa-facebook fa-2x"></i></a>
                         {% endif %}
 
-                        {% if lead.social_twitter != None %}
-                        <a href="https://twitter.com/{{ lead.social_twitter }}"><i class="fa-brands fa-twitter fa-2x"></i></a>
+                        {% if community.lead.social_twitter != None %}
+                        <a href="https://twitter.com/{{ community.lead.social_twitter }}"><i class="fa-brands fa-twitter fa-2x"></i></a>
                         {% endif %}
 
-                        {% if lead.social_linkedin != None %}
-                        <a href="https://linkedin.com/in/{{ lead.social_linkedin }}"><i class="fa-brands fa-linkedin fa-2x"></i></a>
+                        {% if community.lead.social_linkedin != None %}
+                        <a href="https://linkedin.com/in/{{ community.lead.social_linkedin }}"><i class="fa-brands fa-linkedin fa-2x"></i></a>
                         {% endif %}
 
-                        {% if lead.social_youtube != None %}
-                        <a href="https://youtube.com/{{ lead.social_youtube }}"><i class="fa-brands fa-youtube fa-2x"></i></a>
+                        {% if community.lead.social_youtube != None %}
+                        <a href="https://youtube.com/{{ community.lead.social_youtube }}"><i class="fa-brands fa-youtube fa-2x"></i></a>
                         {% endif %}
 
-                        {% if lead.social_website != None %}
-                        <a href="{{ lead.social_website }}"><i class="fa-solid fa-link fa-2x"></i></a>
+                        {% if community.lead.social_website != None %}
+                        <a href="{{ community.lead.social_website }}"><i class="fa-solid fa-link fa-2x"></i></a>
                         {% endif %}
 
-                        {% if lead.social_email != None %}
-                        <a href="mailto:{{ lead.social_email }}"><i class="fa-solid fa-envelope fa-2x"></i></a>
+                        {% if community.lead.social_email != None %}
+                        <a href="mailto:{{ community.lead.social_email }}"><i class="fa-solid fa-envelope fa-2x"></i></a>
                         {% endif %}
 
                         </div>
@@ -79,7 +83,6 @@
 <script type="text/javascript">
     // This javascript snippet was inspired from tuts-station.com
 
-    const communities = {{ json_communities|safe }};
     const leads = {{ json_leads|safe }};
 
     let loadedLead;
@@ -89,7 +92,7 @@
             loadedLead.close()
         }
         $.ajax({
-            url: "api/lead/" + marker.id,
+            url: "../api/lead/" + marker.id,
             type: "GET",
             dataType: "html",
             success: function (data) {
@@ -122,11 +125,11 @@
 
         let marker, i;
 
-        for (i = 0; i < communities.length; i++) {
+        for (i = 0; i < leads.length; i++) {
             marker = new google.maps.Marker({
-                position: new google.maps.LatLng(communities[i]['fields']['latitude'], communities[i]['fields']['longitude']),
+                position: new google.maps.LatLng(leads[i]['fields']['latitude'], leads[i]['fields']['longitude']),
                 map,
-                id: communities[i]['pk']
+                id: leads[i]['pk']
             });
 
             google.maps.event.addListener(marker, 'click', (function (marker, i) {

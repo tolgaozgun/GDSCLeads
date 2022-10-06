@@ -10,13 +10,13 @@
                 <div class="sb-sidenav-menu-heading">Models</div>
                 <a class="nav-link collapsed" href="#" data-bs-toggle="collapse" data-bs-target="#collapseLayouts" aria-expanded="false" aria-controls="collapseLayouts">
                     <div class="sb-nav-link-icon"><i class="fas fa-columns"></i></div>
-                    Leads
+                    Members
                     <div class="sb-sidenav-collapse-arrow"><i class="fas fa-angle-down"></i></div>
                 </a>
                 <div class="collapse" id="collapseLayouts" aria-labelledby="headingOne" data-bs-parent="#sidenavAccordion">
                     <nav class="sb-sidenav-menu-nested nav">
-                        <a class="nav-link" href="{% url 'panel_lead_add' %}">Add a New Lead</a>
-                        <a class="nav-link" href="{% url 'panel_leads' %}">Browse Leads</a>
+                        <a class="nav-link" href="{% url 'panel_member_add' %}">Add a New Member</a>
+                        <a class="nav-link" href="{% url 'panel_members' %}">Browse Members</a>
                     </nav>
                 </div>
                 <a class="nav-link collapsed" href="#" data-bs-toggle="collapse" data-bs-target="#collapseCommunities" aria-expanded="false" aria-controls="collapseCommunities">
@@ -52,6 +52,17 @@
                         <a class="nav-link" href="{% url 'panel_cities' %}">Browse Cities</a>
                     </nav>
                 </div>
+                <a class="nav-link collapsed" href="#" data-bs-toggle="collapse" data-bs-target="#collapseVenues" aria-expanded="false" aria-controls="collapseCities">
+                    <div class="sb-nav-link-icon"><i class="fas fa-book-open"></i></div>
+                    Venues
+                    <div class="sb-sidenav-collapse-arrow"><i class="fas fa-angle-down"></i></div>
+                </a>
+                <div class="collapse" id="collapseVenues" aria-labelledby="headingTwo" data-bs-parent="#sidenavAccordion">
+                    <nav class="sb-sidenav-menu-nested nav">
+                        <a class="nav-link" href="{% url 'panel_venue_add' %}">Add a New Venue</a>
+                        <a class="nav-link" href="{% url 'panel_venues' %}">Browse Venues</a>
+                    </nav>
+                </div>
                 <div class="sb-sidenav-menu-heading">Settings</div>
                 <a class="nav-link" href="{% url 'panel_index' %}">
                     <div class="sb-nav-link-icon"><i class="fas fa-tachometer-alt"></i></div>
@@ -71,7 +82,7 @@
             <div class="small">Logged in as:</div>
             <div class="row">
                 <div class="col text-start">User</div>
-                <div class="col text-end">Logout</div>
+                <div class="col text-end"><a href="{% url 'logout' %}">Logout</a></div>
             </div>
         </div>
     </nav>

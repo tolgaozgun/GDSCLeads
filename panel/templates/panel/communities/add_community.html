@@ -1,0 +1,136 @@
+{% extends 'panel/base/base_index.html' %}
+
+{% block title %}
+    <title>GDSC Panel - Add Community</title>
+{% endblock %}
+
+{% block content %}
+<div id="layoutSidenav">
+{% block sidenav %}
+    {% include 'panel/base/base_sidenav.html' %}
+{% endblock %}
+    <div id="layoutSidenav_content">
+        <div id="layoutAuthentication">
+            <div id="layoutAuthentication_content">
+                <main>
+                    <div class="container">
+                        <div class="row justify-content-center">
+                            <div class="col-lg-7">
+                                <div class="card shadow-lg border-0 rounded-lg mt-5">
+                                    <div class="card-header"><h3 class="text-center font-weight-light my-4">Add a New Community</h3></div>
+                                    <div class="card-body">
+                                        <form method="POST" enctype="multipart/form-data">
+                                            {% csrf_token %}
+                                            <div class="row mb-3">
+                                                <div class="col">
+                                                    {{ form.photo.errors }}
+                                                    <label for="{{ form.photo.id_for_label }}">Photo</label>
+                                                    {{ form.photo }}
+                                                </div>
+                                            </div>
+                                            <div class="row mb-3">
+                                                <div class="col">
+                                                    <div class="form-floating mb-3 mb-md-0">
+                                                        {{ form.name.errors }}
+                                                        {{ form.name }}
+                                                        <label for="{{ form.name.id_for_label }}">Name</label>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            <div class="border-top my-3"></div>
+                                            <div class="row mb-3">
+                                                <div class="col-md-6">
+                                                    <div class="form-floating mb-3 mb-md-0">
+                                                        {{ form.social_instagram.errors }}
+                                                        {{ form.social_instagram }}
+                                                        <label for="{{ form.social_instagram.id_for_label }}">Instagram</label>
+                                                    </div>
+                                                </div>
+                                                <div class="col-md-6">
+                                                    <div class="form-floating mb-3 mb-md-0">
+                                                        {{ form.social_twitter.errors }}
+                                                        {{ form.social_twitter }}
+                                                        <label for="{{ form.social_twitter.id_for_label }}">Twitter</label>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            <div class="row mb-3">
+                                                <div class="col-md-6">
+                                                    <div class="form-floating mb-3 mb-md-0">
+                                                        {{ form.social_linkedin.errors }}
+                                                        {{ form.social_linkedin }}
+                                                        <label for="{{ form.social_linkedin.id_for_label }}">Linkedin</label>
+                                                    </div>
+                                                </div>
+                                                <div class="col-md-6">
+                                                    <div class="form-floating mb-3 mb-md-0">
+                                                        {{ form.social_youtube.errors }}
+                                                        {{ form.social_youtube }}
+                                                        <label for="{{ form.social_youtube.id_for_label }}">Youtube</label>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            <div class="row mb-3">
+                                                <div class="col-md-6">
+                                                    <div class="form-floating mb-3 mb-md-0">
+                                                        {{ form.social_email.errors }}
+                                                        {{ form.social_email }}
+                                                        <label for="{{ form.social_email.id_for_label }}">Contact Email</label>
+                                                    </div>
+                                                </div>
+                                                <div class="col-md-6">
+                                                    <div class="form-floating mb-3 mb-md-0">
+                                                        {{ form.social_website.errors }}
+                                                        {{ form.social_website }}
+                                                        <label for="{{ form.social_website.id_for_label }}">Website</label>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            <div class="border-top my-3"></div>
+                                            <div class="form-floating mb-3">
+                                                {{ form.biography.errors }}
+                                                {{ form.biography }}
+                                                <label for="{{ form.biography.id_for_label }}">Biography</label>
+                                            </div>
+                                            <div class="row mb-3">
+                                                <div class="col-md-6">
+                                                    <div class="form-floating mb-3 mb-md-0">
+                                                        {{ form.latitude.errors }}
+                                                        {{ form.latitude }}
+                                                        <label for="{{ form.latitude.id_for_label }}">Latitude</label>
+                                                    </div>
+                                                </div>
+                                                <div class="col-md-6">
+                                                    <div class="form-floating mb-3 mb-md-0">
+                                                        {{ form.longitude.errors }}
+                                                        {{ form.longitude }}
+                                                        <label for="{{ form.longitude.id_for_label }}">Longitude</label>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            <div class="row mb-3">
+                                                <div class="col">
+                                                    <div class="form-floating mb-3 mb-md-0">
+                                                        {{ form.city.errors }}
+                                                        {{ form.city }}
+                                                        <label for="{{ form.city.id_for_label }}">City</label>
+                                                    </div>
+                                            </div>
+                                            <div class="mt-4 mb-0">
+                                                <div class="d-grid"><button class="btn btn-primary btn-block" type="submit">Add a New Community</button></div>
+                                            </div>
+                                        </form>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </main>
+            </div>
+            {% block footer %}
+                {% include 'panel/base/authentication_footer.html' %}
+            {% endblock %}
+        </div>
+    </div>
+</div>
+{% endblock %}

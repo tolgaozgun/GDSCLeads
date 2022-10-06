@@ -3,7 +3,7 @@ from django.shortcuts import render
 # Create your views here.
 from django.views import View
 
-from map.models import Community, Lead, Event, City
+from map.models import Community, User, Event, City, Venue
 
 
 class CommunityView(View):
@@ -21,8 +21,8 @@ class CommunityView(View):
 class LeadView(View):
     def get(self, request, pk):
         try:
-            lead = Lead.objects.get(id=pk)
-        except Lead.DoesNotExist:
+            lead = User.objects.get(id=pk)
+        except User.DoesNotExist:
             lead = None
         context = {
             "lead": lead
@@ -52,4 +52,16 @@ class CityView(View):
             "city": city
         }
         return render(request, "profile/city_profile.html", context)
+
+
+class VenueView(View):
+    def get(self, request, pk):
+        try:
+            venue = Venue.objects.get(id=pk)
+        except Venue.DoesNotExist:
+            venue = None
+        context = {
+            "venue": venue
+        }
+        return render(request, "profile/venue_profile.html", context)
 
