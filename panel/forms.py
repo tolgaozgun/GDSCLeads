@@ -43,9 +43,9 @@ class AddLeadForm(forms.ModelForm):
         community = cleaned_data.get("community")
         if password and password_again and password != password_again:
             self.add_error("password_again", "Your passwords must match")
-        if community is not None:
-            cleaned_data["latitude"] = community.latitude
-            cleaned_data["longitude"] = community.longitude
+        # if community is not None:
+        #     cleaned_data["latitude"] = community.latitude
+        #     cleaned_data["longitude"] = community.longitude
         return cleaned_data
 
     def __init__(self, *args, **kwargs):
