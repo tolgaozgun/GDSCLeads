@@ -64,6 +64,7 @@ class UserManager(BaseUserManager):
         if password is not None:
             query.set_password(password)
         query.name = name
+        query.email = email
         query.save(using=self._db)
 
         if params is not None:
