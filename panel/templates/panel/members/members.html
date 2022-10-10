@@ -71,32 +71,32 @@
                                 <td>{{ member.email }}</td>
                                 <td>{{ member.biography }}</td>
                                 {% if member.social_instagram is not None %}
-                                <td><a href="https://instagram.com/{{ member.social_instagram }}">{{ member.social_instagram }}</a></td>
+                                <td><a target="_blank" href="https://instagram.com/{{ member.social_instagram }}">{{ member.social_instagram }}</a></td>
                                 {% else %}
                                 <td>Not Given</td>
                                 {% endif %}
                                 {% if member.social_website is not None %}
-                                <td><a href="{{ member.social_website }}">{{ member.social_website }}</a></td>
+                                <td><a target="_blank" href="https://{{ member.social_website }}">{{ member.social_website }}</a></td>
                                 {% else %}
                                 <td>Not Given</td>
                                 {% endif %}
                                 {% if member.social_twitter is not None %}
-                                <td><a href="https://twitter.com/{{ member.social_twitter }}">{{ member.social_twitter }}</a></td>
+                                <td><a target="_blank" href="https://twitter.com/{{ member.social_twitter }}">{{ member.social_twitter }}</a></td>
                                 {% else %}
                                 <td>Not Given</td>
                                 {% endif %}
                                 {% if member.social_linkedin is not None %}
-                                <td><a href="https://linkedin.com/{{ member.social_linkedin }}">{{ member.social_linkedin }}</a></td>
+                                <td><a target="_blank" href="https://linkedin.com/{{ member.social_linkedin }}">{{ member.social_linkedin }}</a></td>
                                 {% else %}
                                 <td>Not Given</td>
                                 {% endif %}
                                 {% if member.social_email is not None %}
-                                <td><a href="mailto:{{ member.social_email }}">{{ member.social_email }}</a></td>
+                                <td><a target="_blank" href="mailto:{{ member.social_email }}">{{ member.social_email }}</a></td>
                                 {% else %}
                                 <td>Not Given</td>
                                 {% endif %}
                                 {% if member.social_youtube is not None %}
-                                <td><a href="https://youtube.com/{{ member.social_youtube }}">{{ member.social_youtube }}</a></td>
+                                <td><a target="_blank" href="https://youtube.com/{{ member.social_youtube }}">{{ member.social_youtube }}</a></td>
                                 {% else %}
                                 <td>Not Given</td>
                                 {% endif %}

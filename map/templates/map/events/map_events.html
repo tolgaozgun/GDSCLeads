@@ -150,7 +150,7 @@
 
     window.initMap = initMap;
 </script>
-
+{#  Slice here removes the single quotes surrounding the API key  #}
 <script type="text/javascript"
         src="https://maps.googleapis.com/maps/api/js?key={{ google_maps_api_key|slice:"1:-1" }}&callback=initMap"></script>
 {% endblock %}
