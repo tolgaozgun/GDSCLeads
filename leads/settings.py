@@ -33,7 +33,7 @@ GOOGLE_MAPS_API_KEY = os.environ["GOOGLE_MAPS_API_KEY"]
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-ALLOWED_HOSTS = []
+ALLOWED_HOSTS = ["92.205.25.135"]
 
 AUTH_USER_MODEL = 'map.User'
 
