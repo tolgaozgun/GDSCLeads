@@ -46,6 +46,22 @@
                                                     </div>
                                                 </div>
                                             </div>
+                                            <div class="row mb-3">
+                                                <div class="col-md-6">
+                                                    <div class="form-floating mb-3 mb-md-0">
+                                                        {{ form.picked_date.errors }}
+                                                        {{ form.picked_date }}
+                                                        <label for="{{ form.picked_date.id_for_label }}">Date</label>
+                                                    </div>
+                                                </div>
+                                                <div class="col-md-6">
+                                                    <div class="form-floating mb-3 mb-md-0">
+                                                        {{ form.picked_time.errors }}
+                                                        {{ form.picked_time }}
+                                                        <label for="{{ form.picked_time.id_for_label }}">Time</label>
+                                                    </div>
+                                                </div>
+                                            </div>
                                             <div class="border-top my-3"></div>
                                             <div class="row mb-3">
                                                 <div class="col-md-6">

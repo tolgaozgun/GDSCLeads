@@ -24,9 +24,12 @@
                                 <th>ID</th>
                                 <th>Photo</th>
                                 <th>Name</th>
-                                <th>Community</th>
+                                <th>Communities</th>
                                 <th>Venue</th>
                                 <th>Description</th>
+                                <th>Date</th>
+                                <th>Date Added</th>
+                                <th>Last Edited</th>
                             </tr>
                         </thead>
                         <tfoot>
@@ -34,9 +37,12 @@
                                 <th>ID</th>
                                 <th>Photo</th>
                                 <th>Name</th>
-                                <th>Community</th>
+                                <th>Communities</th>
                                 <th>Venue</th>
                                 <th>Description</th>
+                                <th>Date</th>
+                                <th>Date Added</th>
+                                <th>Last Edited</th>
                             </tr>
                         </tfoot>
                         <tbody>
@@ -45,9 +51,12 @@
                                 <td>{{ event.id }}</td>
                                 <td><a href="{{ event.photo.url }}"><img src="{{ event.photo.url }}" style="max-width: 100px; max-height: 100px"></a></td>
                                 <td><a href="{% url 'view_event' event.id %}">{{ event.name }}</a></td>
-                                <td>{% for community in event.communities.all %}<a href="{% url 'view_community' community.id %}">{{community.name}}</a>{% endfor %}</td>
+                                <td>{% for community in event.communities.all %}<a href="{% url 'view_community' community.id %}">{{community.name}}</a><br>{% endfor %}</td>
                                 <td><a href="{% url 'view_venue' event.venue.id %}">{{event.venue.name}}</a></td>
                                 <td>{{ event.description }}</td>
+                                <td>{{ event.date }}</td>
+                                <td>{{ event.date_added }}</td>
+                                <td>{{ event.date_updated }}</td>
                             </tr>
                         {% endfor %}
                         </tbody>

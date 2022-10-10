@@ -5,10 +5,7 @@ from panel.views import *
 
 urlpatterns = [
     path('', IndexView.as_view(), name="panel_index"),
-    path('login', LoginView.as_view(), name="login"),
     path('logout', LogoutView.as_view(), name="logout"),
-    path('register', RegisterView.as_view(), name="register"),
-    path('forgot_password', ForgotPasswordView.as_view(), name="forgot_password"),
     path('404', NotFoundView.as_view(), name="not_found"),
     path('charts', ChartsView.as_view(), name="charts_view"),
 
@@ -36,6 +33,8 @@ urlpatterns = [
     path('venues/add', AddVenueView.as_view(), name="panel_venue_add"),
     path('venues/<int:pk>/edit', EditVenueView.as_view(), name="panel_venue_edit"),
     path('venues/<int:pk>/delete', DeleteVenueView.as_view(), name="panel_venue_delete"),
+
+    path('profile', ProfileView.as_view(), name="profile")
 
 
 ]

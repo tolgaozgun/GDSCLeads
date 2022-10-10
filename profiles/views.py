@@ -21,11 +21,11 @@ class CommunityView(View):
 class LeadView(View):
     def get(self, request, pk):
         try:
-            lead = User.objects.get(id=pk)
+            user = User.objects.get(id=pk)
         except User.DoesNotExist:
-            lead = None
+            user = None
         context = {
-            "lead": lead
+            "user": user
         }
         return render(request, "profile/lead_profile.html", context)
 

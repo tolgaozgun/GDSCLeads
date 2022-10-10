@@ -1,14 +1,82 @@
-from django.db.models.functions import Lead
-from django.http import JsonResponse
-from django.shortcuts import render
+from django.contrib.auth import get_user_model, login, authenticate
+from django.shortcuts import render, redirect
 from django.views import View
 from django.conf import settings
 from django.core import serializers
+from django.contrib import messages
 
+from map.forms import RegisterForm
 from map.models import Community, User, Event
-import json
 
 from map.serializers import LazyEncoder
+from panel.forms import LoginForm
+
+
+class LoginView(View):
+    def get(self, request):
+        if request.user.is_authenticated:
+            return redirect("panel_index")
+        form = LoginForm()
+        context = {"form": form}
+        return render(request, "login.html", context)
+
+    def post(self, request):
+        form = LoginForm(request.POST, request.FILES)
+        if form.is_valid():
+            value_email = form.cleaned_data.get("email")
+            value_password = form.cleaned_data.get("password")
+
+            user = authenticate(request, email=value_email, password=value_password)
+
+            if user is not None:
+                if user.is_active:
+                    login(request, user)
+                    redirection = request.POST.get("redirect", None)
+                    if redirection is not None:
+                        print("Redirect")
+                        print(redirection)
+                        return redirect(redirection)
+                    return redirect("panel_index")
+                else:
+                    form.add_error("email", "Account has not been activated yet!")
+                    context = {"form": form}
+                    return render(request, "login.html", context)
+            else:
+                form.add_error("email", "Invalid user and password combination!")
+                context = {"form": form}
+                return render(request, "login.html", context)
+
+        else:
+            context = {"form": form}
+            return render(request, "login.html", context)
+
+
+class RegisterView(View):
+    def get(self, request):
+        form = RegisterForm()
+        context = {"form": form}
+        return render(request, "register.html", context)
+
+    def post(self, request):
+        form = RegisterForm(request.POST, request.FILES)
+
+        if form.is_valid():
+            email = form.cleaned_data.get("email")
+            password = form.cleaned_data.get("password")
+            name = form.cleaned_data.get("name")
+
+            user = get_user_model().objects.create_user(email, password, name)
+            # send_email(new_user)
+            # new_user.save()
+            messages.info(request, "Register successful!")
+            return render(request, "register.html", {'form': form})
+        else:
+            return render(request, "register.html", {'form': form})
+
+
+class ForgotPasswordView(View):
+    def get(self, request):
+        return render(request, "password.html")
 
 
 class IndexView(View):
@@ -29,7 +97,7 @@ class EventMapView(View):
                    "events": events,
                    "json_events": json_events}
 
-        return render(request, "map/map_events.html", context)
+        return render(request, "map/events/map_events.html", context)
 
 
 class CommunityMapView(View):
@@ -41,7 +109,7 @@ class CommunityMapView(View):
                    "communities": communities,
                    "json_communities": json_communities}
 
-        return render(request, "map/map_communities.html", context)
+        return render(request, "map/communities/map_communities.html", context)
 
 
 class LeadMapView(View):
@@ -53,7 +121,7 @@ class LeadMapView(View):
                    "leads": leads,
                    "json_leads": json_leads}
 
-        return render(request, "map/map_leads.html", context)
+        return render(request, "map/leads/map_leads.html", context)
 
 
 class LeadApiView(View):
@@ -63,7 +131,7 @@ class LeadApiView(View):
             context = {"lead": lead}
         except User.DoesNotExist:
             context = {}
-        return render(request, "map/lead_box_content.html", context)
+        return render(request, "map/leads/lead_box_content.html", context)
 
 
 class CommunityApiView(View):
@@ -73,7 +141,7 @@ class CommunityApiView(View):
             context = {"community": community}
         except Community.DoesNotExist:
             context = {}
-        return render(request, "map/community_box_content.html", context)
+        return render(request, "map/communities/community_box_content.html", context)
 
 
 class EventApiView(View):
@@ -83,5 +151,5 @@ class EventApiView(View):
             context = {"event": event}
         except Event.DoesNotExist:
             context = {}
-        return render(request, "map/event_box_content.html", context)
+        return render(request, "map/events/event_box_content.html", context)
 

@@ -1,43 +1,21 @@
+from datetime import datetime
+
 from django import forms
 from django.contrib.auth import authenticate
 from django.contrib.auth.models import User
 from map.models import User, Community, City, Event, Venue
 
 
-class RegisterForm(forms.ModelForm):
-    password = forms.CharField(widget=forms.PasswordInput)
-    password_again = forms.CharField(label="Confirm Password", widget=forms.PasswordInput)
+class DateInput(forms.DateInput):
+    input_type = 'date'
 
-    class Meta:
-        model = User
-        fields = ['email', 'name']
 
-    def clean_email(self):
-        email = self.cleaned_data.get('email')
-        users = User.objects.filter(email=email)
-        if users.exists():
-            raise forms.ValidationError("This email is already taken")
-        return email
+class TimePickerInput(forms.TimeInput):
+    input_type = 'time'
 
-    def clean(self):
-        cleaned_data = super().clean()
-        password = cleaned_data.get("password")
-        password_again = cleaned_data.get("password_again")
-        if password and password_again and password != password_again:
-            self.add_error("password_again", "Your passwords must match")
-        return cleaned_data
 
-    def __init__(self, *args, **kwargs):
-        super().__init__(*args, **kwargs)
-        placeholders = {
-            'name': '',
-            'email': 'example@email.com',
-            'password': '',
-            'password_again': '',
-        }
-        for key, value in placeholders.items():
-            # self.fields[key].widget.attrs['placeholder'] = value
-            self.fields[key].widget.attrs['class'] = 'form-control'
+class DateTimePickerInput(forms.DateTimeInput):
+    input_type = 'datetime'
 
 
 class AddLeadForm(forms.ModelForm):
@@ -49,7 +27,7 @@ class AddLeadForm(forms.ModelForm):
         fields = ['email', 'name', 'photo', 'community', 'biography',
                   'social_instagram', 'social_email', 'social_facebook',
                   'social_twitter', 'social_website', 'social_linkedin',
-                  'social_youtube', 'is_lead']
+                  'social_youtube', 'is_lead', 'is_core_team']
 
     def clean_email(self):
         email = self.cleaned_data.get('email')
@@ -93,6 +71,9 @@ class AddLeadForm(forms.ModelForm):
 
 
 class AddEventForm(forms.ModelForm):
+    picked_date = forms.DateField(widget=DateInput())
+    picked_time = forms.TimeField(widget=TimePickerInput())
+
     class Meta:
         model = Event
         fields = ['name', 'photo', 'communities', 'description',
@@ -100,8 +81,6 @@ class AddEventForm(forms.ModelForm):
 
     def clean(self):
         cleaned_data = super().clean()
-        cleaned_data["latitude"] = cleaned_data.get("venue").latitude
-        cleaned_data["longitude"] = cleaned_data.get("venue").longitude
         return cleaned_data
 
     def __init__(self, *args, **kwargs):
@@ -112,6 +91,8 @@ class AddEventForm(forms.ModelForm):
             'communities': '',
             'description': '',
             'venue': '',
+            'picked_date': '',
+            'picked_time': '',
         }
         for key, value in placeholders.items():
             self.fields[key].widget.attrs['class'] = 'form-control'

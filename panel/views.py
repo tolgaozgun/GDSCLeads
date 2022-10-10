@@ -1,12 +1,13 @@
+from datetime import datetime
+
 from django.contrib.auth import authenticate, login, get_user_model, logout
 from django.contrib.auth.mixins import LoginRequiredMixin
 from django.shortcuts import render, redirect
-from django.contrib import messages
 # Create your views here.
 from django.views import View
 
 from map.models import User, Community, Event, City, Venue
-from panel.forms import LoginForm, RegisterForm, AddLeadForm, AddCommunityForm, AddCityForm, EditLeadForm, AddEventForm, \
+from panel.forms import AddLeadForm, AddCommunityForm, AddCityForm, EditLeadForm, AddEventForm, \
     AddVenueForm
 
 
@@ -19,78 +20,6 @@ class LogoutView(LoggedInView):
     def get(self, request):
         logout(request)
         return redirect('index')
-
-
-class LoginView(View):
-    def get(self, request):
-        if request.user.is_authenticated:
-            return redirect("panel_index")
-        form = LoginForm()
-        context = {"form": form}
-        return render(request, "panel/login.html", context)
-
-    def post(self, request):
-        form = LoginForm(request.POST, request.FILES)
-        if form.is_valid():
-            value_email = form.cleaned_data.get("email")
-            value_password = form.cleaned_data.get("password")
-
-            user = authenticate(request, email=value_email, password=value_password)
-
-            if user is not None:
-                if user.is_active:
-                    login(request, user)
-                    redirection = request.POST.get("redirect", None)
-                    if redirection is not None:
-                        print("Redirect")
-                        print(redirection)
-                        return redirect(redirection)
-                    return redirect("panel_index")
-                else:
-                    form.add_error("email", "Account has not been activated yet!")
-                    context = {"form": form}
-                    return render(request, "panel/login.html", context)
-            else:
-                form.add_error("email", "Invalid user and password combination!")
-                context = {"form": form}
-                return render(request, "panel/login.html", context)
-
-        else:
-            print("Errors")
-            print(form.errors)
-            # form.add_error("email", "Form is not valid")
-            print("Form not valid!")
-            print(form.non_field_errors)
-            context = {"form": form}
-            return render(request, "panel/login.html", context)
-
-
-class RegisterView(View):
-    def get(self, request):
-        form = RegisterForm()
-        context = {"form": form}
-        return render(request, "panel/register.html", context)
-
-    def post(self, request):
-        form = RegisterForm(request.POST, request.FILES)
-
-        if form.is_valid():
-            email = form.cleaned_data.get("email")
-            password = form.cleaned_data.get("password")
-            name = form.cleaned_data.get("name")
-
-            user = get_user_model().objects.create_user(email, password, name)
-            # send_email(new_user)
-            # new_user.save()
-            messages.info(request, "Register successful!")
-            return render(request, "panel/register.html", {'form': form})
-        else:
-            return render(request, "panel/register.html", {'form': form})
-
-
-class ForgotPasswordView(View):
-    def get(self, request):
-        return render(request, "panel/password.html")
 
 
 class IndexView(LoggedInView):
@@ -221,9 +150,18 @@ class AddEventView(LoggedInView):
     def post(self, request):
         form = AddEventForm(request.POST, request.FILES)
         if form.is_valid():
-            form.save()
+            draft = form.save(commit=False)
+            cleaned_data = form.cleaned_data
+            draft.latitude = cleaned_data.get("venue").latitude
+            draft.longitude = cleaned_data.get("venue").longitude
+            picked_date = cleaned_data.pop("picked_date")
+            picked_time = cleaned_data.pop("picked_time")
+            draft.date = datetime.combine(picked_date, picked_time)
+            draft.save()
+            form.save_m2m()
             return render(request, "panel/events/add_event.html", {'form': form})
         else:
+            print("A")
             print(form.errors)
             return render(request, "panel/events/add_event.html", {'form': form})
 
@@ -318,3 +256,9 @@ class EditVenueView(LoggedInView):
 class DeleteVenueView(LoggedInView):
     def get(self, request):
         pass
+
+
+class ProfileView(LoggedInView):
+    def get(self, request):
+        context = {'user': request.user}
+        return render(request, "panel/settings/profile.html", context)

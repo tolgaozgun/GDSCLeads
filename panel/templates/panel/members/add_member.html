@@ -114,19 +114,22 @@
                                                 <label for="{{ form.biography.id_for_label }}">Biography</label>
                                             </div>
                                             <div class="row mb-3">
-                                                <div class="col-md-6">
+                                                <div class="col">
                                                     <div class="form-floating mb-3 mb-md-0">
                                                         {{ form.community.errors }}
                                                         {{ form.community }}
                                                         <label for="{{ form.community.id_for_label }}">Community</label>
                                                     </div>
                                                 </div>
-                                                <div class="col-md-6">
-                                                    <div class="form-floating mb-3 mb-md-0">
-                                                        {{ form.is_lead.errors }}
-                                                        <label for="{{ form.is_lead.id_for_label }}" class="text-end">Assign the New Lead</label>
-                                                        {{ form.is_lead }}
-                                                    </div>
+                                                <div class="col">
+                                                    {{ form.is_lead.errors }}
+                                                    <label for="{{ form.is_lead.id_for_label }}" class="text-end">Assign as Lead</label>
+                                                    {{ form.is_lead }}
+
+                                                <div class="col">
+                                                    {{ form.is_core_team.errors }}
+                                                    <label for="{{ form.is_core_team.id_for_label }}" class="text-end">Assign to Core Team</label>
+                                                    {{ form.is_core_team }}
                                                 </div>
                                             </div>
                                             <div class="mt-4 mb-0">

@@ -34,6 +34,7 @@
                                 <th>Contact Email</th>
                                 <th>Youtube</th>
                                 <th>Lead?</th>
+                                <th>Core Team?</th>
                                 <th>Actions</th>
                             </tr>
                         </thead>
@@ -52,6 +53,7 @@
                                 <th>Contact Email</th>
                                 <th>Youtube</th>
                                 <th>Lead?</th>
+                                <th>Core Team?</th>
                                 <th>Actions</th>
                             </tr>
                         </tfoot>
@@ -99,6 +101,7 @@
                                 <td>Not Given</td>
                                 {% endif %}
                                 <td>{{ member.is_lead }}</td>
+                                <td>{{ member.is_core_team }}</td>
                                 <td>
                                     <div class="container-fluid">
                                         <div class="row">

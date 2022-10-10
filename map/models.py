@@ -181,10 +181,16 @@ class Event(models.Model):
     communities = models.ManyToManyField(Community, related_name="events", blank=True)
     description = models.TextField()
     venue = models.ForeignKey(Venue, related_name="event", on_delete=models.CASCADE, null=False, blank=False)
+    date = models.DateTimeField(blank=False, null=False)
     date_added = models.DateTimeField(auto_now_add=True)
     date_updated = models.DateTimeField(auto_now=True)
     latitude = models.FloatField()
     longitude = models.FloatField()
+
+    class Meta:
+        # sort by "the date" in descending order unless
+        # overridden in the query with order_by()
+        ordering = ['-date']
 
     def __str__(self):
         if self is None:
