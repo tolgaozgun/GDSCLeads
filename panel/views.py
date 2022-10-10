@@ -1,5 +1,6 @@
 from datetime import datetime
 
+from django.contrib import messages
 from django.contrib.auth import authenticate, login, get_user_model, logout
 from django.contrib.auth.mixins import LoginRequiredMixin
 from django.shortcuts import render, redirect
@@ -53,8 +54,10 @@ class AddMemberView(LoggedInView):
             form.cleaned_data.pop("password")
 
             user = get_user_model().objects.create_user(email, password, name, form.cleaned_data)
+            messages.success(request, "Member added successfully.")
             return render(request, "panel/members/add_member.html", {'form': form})
         else:
+            messages.error(request, form.errors)
             return render(request, "panel/members/add_member.html", {'form': form})
 
 
@@ -93,10 +96,12 @@ class EditMemberView(LoggedInView):
 
             if len(str(password).strip()) == 0:
                 password = None
-
             user = get_user_model().objects.update_user_admin(pk, email, password, name, form.cleaned_data)
-            return render(request, "panel/members/edit_member.html", {'form': form})
+
+            messages.success(request, "Member edited successfully.")
+            return render(request, "panel/members/edit_member.html", {"form": form})
         else:
+            messages.error(request, form.errors)
             return render(request, "panel/members/edit_member.html", {'form': form})
 
 
@@ -116,8 +121,10 @@ class AddCommunityView(LoggedInView):
 
         if form.is_valid():
             form.save()
+            messages.success(request, "Added community successfully")
             return render(request, "panel/communities/add_community.html", {'form': form})
         else:
+            messages.error(request, form.errors)
             return render(request, "panel/communities/add_community.html", {'form': form})
 
 
@@ -159,10 +166,10 @@ class AddEventView(LoggedInView):
             draft.date = datetime.combine(picked_date, picked_time)
             draft.save()
             form.save_m2m()
+            messages.success(request, "Added event successfully")
             return render(request, "panel/events/add_event.html", {'form': form})
         else:
-            print("A")
-            print(form.errors)
+            messages.error(request, form.errors)
             return render(request, "panel/events/add_event.html", {'form': form})
 
 
@@ -197,8 +204,10 @@ class AddCityView(LoggedInView):
 
         if form.is_valid():
             form.save()
+            messages.success(request, "Added city successfully")
             return render(request, "panel/cities/add_city.html", {'form': form})
         else:
+            messages.error(request, form.errors)
             return render(request, "panel/cities/add_city.html", {'form': form})
 
 
@@ -233,8 +242,10 @@ class AddVenueView(LoggedInView):
 
         if form.is_valid():
             form.save()
+            messages.success(request, "Added venue successfully")
             return render(request, "panel/venues/add_venue.html", {'form': form})
         else:
+            messages.error(request, form.errors)
             return render(request, "panel/venues/add_venue.html", {'form': form})
 
 

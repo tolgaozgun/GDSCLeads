@@ -47,7 +47,7 @@ class AddLeadForm(forms.ModelForm):
         #     cleaned_data["latitude"] = community.latitude
         #     cleaned_data["longitude"] = community.longitude
         return cleaned_data
-
+ 
     def __init__(self, *args, **kwargs):
         super().__init__(*args, **kwargs)
         placeholders = {
