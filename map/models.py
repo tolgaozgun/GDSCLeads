@@ -50,6 +50,27 @@ class UserManager(BaseUserManager):
 
         return query
 
+    def update_user_admin(self, id, email, password, name, params=None):
+        if not email:
+            raise ValueError("Email is required to create an account")
+
+        try:
+            query = User.objects.get(id=id)
+            if query is None:
+                raise ValueError("This user ID does not exists")
+        except User.DoesNotExist:
+            raise ValueError("This user ID does not exists")
+
+        if password is not None:
+            query.set_password(password)
+        query.name = name
+        query.save(using=self._db)
+
+        if params is not None:
+            User.objects.filter(id=query.id).update(**params)
+
+        return query
+
     def create_staff(self, email, password):
         if not email:
             raise ValueError("Email is required to create an account")

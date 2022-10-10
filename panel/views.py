@@ -94,7 +94,7 @@ class EditMemberView(LoggedInView):
             if len(str(password).strip()) == 0:
                 password = None
 
-            user = get_user_model().objects.update_user(email, password, name, form.cleaned_data)
+            user = get_user_model().objects.update_user_admin(pk, email, password, name, form.cleaned_data)
             return render(request, "panel/members/edit_member.html", {'form': form})
         else:
             return render(request, "panel/members/edit_member.html", {'form': form})
