@@ -157,7 +157,7 @@ class Venue(models.Model):
 
     def __str__(self):
         if self is None:
-            return "None"
+            return "Online"
         else:
             return self.name
 
@@ -202,7 +202,7 @@ class Event(models.Model):
     photo = models.ImageField(upload_to="event", null=True, default="event/avatar.png")
     communities = models.ManyToManyField(Community, related_name="events", blank=True)
     description = models.TextField()
-    venue = models.ForeignKey(Venue, related_name="event", on_delete=models.CASCADE, null=False, blank=False)
+    venue = models.ForeignKey(Venue, related_name="event", on_delete=models.CASCADE, null=True, blank=False)
     date = models.DateTimeField(blank=False, null=False)
     date_added = models.DateTimeField(auto_now_add=True)
     date_updated = models.DateTimeField(auto_now=True)

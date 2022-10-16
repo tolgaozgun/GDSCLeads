@@ -23,12 +23,14 @@
                             <tr>
                                 <th>ID</th>
                                 <th>Name</th>
+                                <th>Actions</th>
                             </tr>
                         </thead>
                         <tfoot>
                             <tr>
                                 <th>ID</th>
                                 <th>Name</th>
+                                <th>Actions</th>
                             </tr>
                         </tfoot>
                         <tbody>
@@ -36,6 +38,21 @@
                             <tr>
                                 <td>{{ city.id }}</td>
                                 <td>{{ city.name }}</td>
+                                <td>
+                                    <div class="container-fluid">
+                                        <div class="row">
+                                            <a href="{% url 'view_city' city.id %}" class="btn btn-sm" data-toggle="tooltip" title="View">
+                                                <i class="fa fa-eye ambitious-padding-btn"></i>
+                                            </a>
+                                            <a href="{% url 'panel_city_edit' city.id %}" class="btn btn-sm" data-toggle="tooltip" title="Edit">
+                                                <i class="fa fa-pencil ambitious-padding-btn"></i>
+                                            </a>
+                                            <a href="#confirmModal" class="btn btn-sm" data-toggle="tooltip" title="Delete">
+                                                <i class="fa fa-trash ambitious-padding-btn"></i>
+                                            </a>
+                                        </div>
+                                    </div>
+                                </td>
                             </tr>
                         {% endfor %}
                         </tbody>

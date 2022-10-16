@@ -16,7 +16,7 @@ urlpatterns = [
 
     path('communities', BrowseCommunitiesView.as_view(), name="panel_communities"),
     path('communities/add', AddCommunityView.as_view(), name="panel_community_add"),
-    path('communities/<int:pk>/edit', EditCommunityView.as_view(), name="panel_community_edit"),
+    path('communities/<int:pk>/edit', EditCommunityView.as_view(), name="community.socialt"),
     path('communities/<int:pk>/delete', DeleteCommunityView.as_view(), name="panel_community_delete"),
 
     path('events', BrowseEventsView.as_view(), name="panel_events"),

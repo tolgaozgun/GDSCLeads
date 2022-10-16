@@ -30,6 +30,7 @@
                                 <th>Date</th>
                                 <th>Date Added</th>
                                 <th>Last Edited</th>
+                                <th>Actions</th>
                             </tr>
                         </thead>
                         <tfoot>
@@ -43,6 +44,7 @@
                                 <th>Date</th>
                                 <th>Date Added</th>
                                 <th>Last Edited</th>
+                                <th>Actions</th>
                             </tr>
                         </tfoot>
                         <tbody>
@@ -57,6 +59,21 @@
                                 <td>{{ event.date }}</td>
                                 <td>{{ event.date_added }}</td>
                                 <td>{{ event.date_updated }}</td>
+                                <td>
+                                    <div class="container-fluid">
+                                        <div class="row">
+                                            <a href="{% url 'view_event' event.id %}" class="btn btn-sm" data-toggle="tooltip" title="View">
+                                                <i class="fa fa-eye ambitious-padding-btn"></i>
+                                            </a>
+                                            <a href="{% url 'panel_event_edit' event.id %}" class="btn btn-sm" data-toggle="tooltip" title="Edit">
+                                                <i class="fa fa-pencil ambitious-padding-btn"></i>
+                                            </a>
+                                            <a href="#confirmModal" class="btn btn-sm" data-toggle="tooltip" title="Delete">
+                                                <i class="fa fa-trash ambitious-padding-btn"></i>
+                                            </a>
+                                        </div>
+                                    </div>
+                                </td>
                             </tr>
                         {% endfor %}
                         </tbody>
