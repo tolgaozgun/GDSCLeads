@@ -63,13 +63,12 @@
                     </table>
                 </div>
             </div>
+        {% block confirmationModal %}
+            {% include 'modal/confirmation.html' %}
+        {% endblock %}
         </main>
     </div>
 </div>
 
-
-{% block confirmationModal %}
-    {% include 'modal/confirmation.html' %}
-{% endblock %}
 
 {% endblock %}
